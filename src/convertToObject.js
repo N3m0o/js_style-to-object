@@ -8,18 +8,21 @@
 function convertToObject(sourceString) {
   const declarationList = sourceString
     .split(';')
-    .map((s) => s.trim())
+    .map((declaration) => declaration.trim())
     .filter(Boolean);
 
-  const stylesObject = declarationList.reduce((acc, str) => {
-    const [key, value] = str.split(':');
+  const stylesObject = declarationList.reduce(
+    (stylesAccumulator, declaration) => {
+      const [key, value] = declaration.split(':');
 
-    if (key && value) {
-      acc[key.trim()] = value.trim();
-    }
+      if (key && value) {
+        stylesAccumulator[key.trim()] = value.trim();
+      }
 
-    return acc;
-  }, {});
+      return stylesAccumulator;
+    },
+    {},
+  );
 
   return stylesObject;
 }
